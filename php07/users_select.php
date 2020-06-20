@@ -9,8 +9,9 @@ try {
     exit('DBError'.$e->getMessage());
 }
 
-//２．データ登録SQL作成
-$sql = "SELECT * FROM gs_an_table ORDER BY id DESC";//SQL問題:"id"を降順(desc)ソートし、６件表示のLIMITの条件を付ける***
+//２．テーブル名"gs_user_table"のSQLを作成
+//課題：ソート降順/5レコードのみ取得
+$sql = "SELECT * FROM gs_user_table ORDER BY id DESC";
 $stmt = $pdo->prepare($sql);
 $status = $stmt->execute();
 
@@ -23,23 +24,22 @@ if($status==false) {
 }else{
     //Selectデータで取得したレコードの数だけ自動でループする
     while( $res = $stmt->fetch(PDO::FETCH_ASSOC)){
-        $view .= $res["id"].",".$res["name"].",".$res["email"].",".$res[age].",".$res["naiyou"].",".$res[indate]."<br>"; //".="は文字と変数をくっつける時に使う
+        $view .= '<p>'.$res["id"].",".$res["name"].",".$res["lid"].",".$res["lpw"].",".$res["kanri_flg"].",".$res["life_flg"].'</p>'; //".="は文字と変数をくっつける時に使う
     }
 }
 ?>
 
 
-
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <title>アンケート：表示画面</title>
-    </head>
-    <body>
-        <?php
-        //表示用変数
-        echo $view;
-        ?>
-    </body>
+<head>
+<meta charset="utf-8">
+<title>アンケート：表示画面</title>
+</head>
+<body>
+<h1>USERSテーブル一覧</h1>
+<?php
+    echo $view; //****ここで変数を表示すること！*****
+?>
+</body>
 </html>
